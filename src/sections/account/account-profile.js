@@ -18,7 +18,11 @@ const user = {
   timezone: 'GTM-7'
 };
 
+const storedArrayAsString = window.sessionStorage.getItem('user');
+const storedArray = JSON.parse(storedArrayAsString);
+
 export const AccountProfile = () => (
+  
   <Card>
     <CardContent>
       <Box
@@ -29,7 +33,7 @@ export const AccountProfile = () => (
         }}
       >
         <Avatar
-          src={user.avatar}
+          src={storedArray.imageUrl || 'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=826&t=st=1688988394~exp=1688988994~hmac=acfb930ab7237d91c22e0b16085b68c33f731cc9645f6eb39fd492cc2f49f28e'}
           sx={{
             height: 80,
             mb: 2,
@@ -40,13 +44,13 @@ export const AccountProfile = () => (
           gutterBottom
           variant="h5"
         >
-          {user.name}
+          {storedArray.alias || storedArray.username}
         </Typography>
         <Typography
           color="text.secondary"
           variant="body2"
         >
-          {user.city} {user.country}
+          {storedArray.email} 
         </Typography>
         <Typography
           color="text.secondary"

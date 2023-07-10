@@ -29,15 +29,16 @@ const states = [
     label: 'Los Angeles'
   }
 ];
+const storedArrayAsString = window.sessionStorage.getItem('user');
+const storedArray = JSON.parse(storedArrayAsString);
 
 export const AccountProfileDetails = () => {
   const [values, setValues] = useState({
-    firstName: 'Anika',
-    lastName: 'Visser',
-    email: 'demo@devias.io',
+    firstName: storedArray.username,
+    lastName: '',
+    email: 'johndoe@gmail.com',
     phone: '',
-    state: 'los-angeles',
-    country: 'USA'
+ 
   });
 
   const handleChange = useCallback(

@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useContext } from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -18,32 +18,54 @@ import {
 } from '@mui/material';
 import { useAuth } from 'src/hooks/use-auth';
 import { Layout as AuthLayout } from 'src/layouts/auth/layout';
+import { useAuthContext } from 'src/contexts/auth-context';
+
 
 const Page = () => {
   const router = useRouter();
-  const auth = useAuth();
+  // const auth = useAuth();
   const [method, setMethod] = useState('email');
+  const { isAuthenticated } = useAuthContext();
+
   const formik = useFormik({
     initialValues: {
-      email: 'demo@devias.io',
-      password: 'Password123!',
+      email: '',
+      password: '',
       submit: null
     },
     validationSchema: Yup.object({
-      email: Yup
-        .string()
-        .email('Must be a valid email')
-        .max(255)
-        .required('Email is required'),
+      
       password: Yup
         .string()
         .max(255)
         .required('Password is required')
     }),
+
     onSubmit: async (values, helpers) => {
       try {
-        await auth.signIn(values.email, values.password);
+        const response = await fetch('https://www.mss.mopawa.co.ke/api/auth/signin', {
+          method: 'POST',
+          headers: {
+            'Accept':'application/json',
+            'Content-Type': 'application/json',
+     
+          },
+          body: JSON.stringify({
+            username: values.email,
+            password: values.password
+          })
+    
+        })
+        .then((response)=>response.json())
+        window.sessionStorage.setItem('authenticated', 'true');
+        window.sessionStorage.setItem('user', JSON.stringify(response));
+        // const storedArrayAsString = window.sessionStorage.getItem('user');
+        // const storedArray = JSON.parse(storedArrayAsString);
+        console.log(response)
+      
         router.push('/');
+       
+  
       } catch (err) {
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
@@ -59,13 +81,13 @@ const Page = () => {
     []
   );
 
-  const handleSkip = useCallback(
-    () => {
-      auth.skip();
-      router.push('/');
-    },
-    [auth, router]
-  );
+  // const handleSkip = useCallback(
+  //   () => {
+  //     auth.skip();
+  //     router.push('/');
+  //   },
+  //   [auth, router]
+  // );
 
   return (
     <>

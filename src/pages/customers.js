@@ -205,7 +205,7 @@ const Page = () => {
     <>
       <Head>
         <title>
-          Merchants | Mss Limited
+          Management | Mss Limited
         </title>
       </Head>
       <Box

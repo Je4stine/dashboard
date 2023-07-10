@@ -103,6 +103,17 @@ const ManagerModal =({open, handleClose})=>{
                                         placeholder: 'Shop Name',
                                       }}
                                     />
+
+                                <TextField
+                                    style={{ marginBottom:20}}
+                                    error={error}
+                                    helperText={error ? 'Field cannot be empty' : ''}
+                                    id="outlined-required"
+                                    label='Location'
+                                    InputProps={{
+                                        placeholder: 'Location',
+                                      }}
+                                    />
                                 <FormControl fullWidth  style={{ marginBottom:20}}>
                                     <InputLabel id="demo-simple-select-label">Number of users</InputLabel>
                                     <Select
@@ -113,9 +124,9 @@ const ManagerModal =({open, handleClose})=>{
                                     onChange={handleUsers}
                                     
                                     >
-                                    <MenuItem value={10}>Ten</MenuItem>
-                                    <MenuItem value={20}>Twenty</MenuItem>
-                                    <MenuItem value={30}>Thirty</MenuItem>
+                                    <MenuItem value={10}>5</MenuItem>
+                                    <MenuItem value={20}>10</MenuItem>
+                                    <MenuItem value={30}>20</MenuItem>
                                     </Select>
                                 </FormControl>
                                 <Button variant="contained">Submit</Button>

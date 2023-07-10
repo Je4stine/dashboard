@@ -8,6 +8,8 @@ export const AccountPopover = (props) => {
   const { anchorEl, onClose, open } = props;
   const router = useRouter();
   const auth = useAuth();
+  const storedArrayAsString = window.sessionStorage.getItem('user');
+  const storedArray = JSON.parse(storedArrayAsString);
 
   const handleSignOut = useCallback(
     () => {
@@ -42,7 +44,7 @@ export const AccountPopover = (props) => {
           color="text.secondary"
           variant="body2"
         >
-          User 000003
+          User {storedArray.username}
         </Typography>
       </Box>
       <Divider />

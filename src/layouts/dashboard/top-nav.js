@@ -24,6 +24,8 @@ export const TopNav = (props) => {
   const { onNavOpen } = props;
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   const accountPopover = usePopover();
+  const storedArrayAsString = window.sessionStorage.getItem('user');
+  const storedArray = JSON.parse(storedArrayAsString);
 
   return (
     <>
@@ -106,7 +108,7 @@ export const TopNav = (props) => {
                 height: 40,
                 width: 40
               }}
-              src="/assets/avatars/avatar-anika-visser.png"
+              src={storedArray.imageUrl || 'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=826&t=st=1688988394~exp=1688988994~hmac=acfb930ab7237d91c22e0b16085b68c33f731cc9645f6eb39fd492cc2f49f28e'}
             />
           </Stack>
         </Stack>
