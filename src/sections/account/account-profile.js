@@ -18,8 +18,14 @@ const user = {
   timezone: 'GTM-7'
 };
 
-const storedArrayAsString = window.sessionStorage.getItem('user');
-const storedArray = JSON.parse(storedArrayAsString);
+// const storedArrayAsString = window.sessionStorage.getItem('user');
+// const storedArray = JSON.parse(storedArrayAsString);
+
+let storedArray = null;
+if (typeof window !== 'undefined') {
+  const storedArrayAsString = window.sessionStorage.getItem('user');
+  storedArray = JSON.parse(storedArrayAsString);
+}
 
 export const AccountProfile = () => (
   

@@ -29,8 +29,15 @@ const states = [
     label: 'Los Angeles'
   }
 ];
-const storedArrayAsString = window.sessionStorage.getItem('user');
-const storedArray = JSON.parse(storedArrayAsString);
+// const storedArrayAsString = window.sessionStorage.getItem('user');
+// const storedArray = JSON.parse(storedArrayAsString);
+
+let storedArray = null;
+if (typeof window !== 'undefined') {
+  const storedArrayAsString = window.sessionStorage.getItem('user');
+  storedArray = JSON.parse(storedArrayAsString);
+}
+
 
 export const AccountProfileDetails = () => {
   const [values, setValues] = useState({
