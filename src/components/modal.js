@@ -39,13 +39,11 @@ const ManagerModal =({open, handleClose})=>{
           return;
         }
     
-        // Perform your form submission logic here
-        // ...
-    
-        // Reset the value after successful submission if needed
+       
         setValue('');
       };
 
+      
       const handleUsers = (event) => {
         setAge(event.target.value);
       };

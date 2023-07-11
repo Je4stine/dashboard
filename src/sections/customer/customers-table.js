@@ -66,7 +66,7 @@ export const CustomersTable = (props) => {
                 </TableCell>
                 
                 <TableCell>
-                  Signed Up
+                  Phone number
                 </TableCell>
 
                 <TableCell>
@@ -77,7 +77,7 @@ export const CustomersTable = (props) => {
             <TableBody>
               {items.map((customer) => {
                 const isSelected = selected.includes(customer.id);
-                const createdAt = format(customer.createdAt, 'dd/MM/yyyy');
+                // const createdAt = format(customer.createdAt, 'dd/MM/yyyy');
 
                 return (
                   <TableRow
@@ -104,11 +104,11 @@ export const CustomersTable = (props) => {
                         direction="row"
                         spacing={2}
                       >
-                        <Avatar src={customer.avatar}>
-                          {getInitials(customer.name)}
+                        <Avatar src={customer.imageUrl}>
+                          {getInitials(customer.username)}
                         </Avatar>
                         <Typography variant="subtitle2">
-                          {customer.name}
+                          {customer.username}
                         </Typography>
                       </Stack>
                     </TableCell>
@@ -116,13 +116,13 @@ export const CustomersTable = (props) => {
                       {customer.email}
                     </TableCell>
                     <TableCell>
-                      {customer.address.city}
+                      ************
                     </TableCell>
                     <TableCell>
-                      {createdAt}
+                     +254 7********
                     </TableCell>
                     <TableCell>
-                      {customer.users}
+                      10
                     </TableCell>
                   </TableRow>
                 );

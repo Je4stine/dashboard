@@ -13,33 +13,8 @@ import { applyPagination } from 'src/utils/apply-pagination';
 
 const now = new Date();
 
-const data = [
-  {
-    id: '5e887ac47eed253091be10cb',
-    address: {
-      city: 'Cleveland',
-      country: 'USA',
-      state: 'Ohio',
-      street: '2849 Fulton Street'
-    },
-    avatar: '/assets/avatars/avatar-carson-darrin.png',
-    createdAt: subDays(subHours(now, 7), 1).getTime(),
-    email: 'carson.darrin@devias.io',
-    name: 'Carson Darrin',
-    phone: '304-428-3097',
-    users: 10
-  },
- 
-];
 
-// const useCustomers = (page, rowsPerPage) => {
-//   return useMemo(
-//     () => {
-//       return applyPagination(users, page, rowsPerPage);
-//     },
-//     [page, rowsPerPage]
-//   );
-// };
+
 
 const useCustomers = (page, rowsPerPage, users) => {
   return useMemo(() => {
