@@ -132,7 +132,7 @@ const Page = () => {
                     error={!!(formik.touched.email && formik.errors.email)}
                     fullWidth
                     helperText={formik.touched.email && formik.errors.email}
-                    label="Email Address"
+                    label="Username"
                     name="email"
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
