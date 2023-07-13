@@ -50,6 +50,7 @@ const ManagerModal =({open, handleClose})=>{
       // }),
   
       onSubmit: async (values, helpers) => {
+        console.log("Going")
         try {
           const response1 = await fetch('https://www.mss.mopawa.co.ke/api/auth/signup', {
             method: 'POST',
@@ -117,17 +118,7 @@ const ManagerModal =({open, handleClose})=>{
       formik.handleChange(field)(event); // Connect the event to Formik's handleChange
     };
   
-    const handleSubmit = (event) => {
-      event.preventDefault();
-  
-      if (formik.values.name.trim() === '') {
-        setError(true); // Set error state if the value is empty
-        return;
-      }
-  
-      console.log('Clicked')
-      formik.handleSubmit(event);
-    };
+   
       
     const handleUsers = (event) => {
       setNoUsers(event.target.value);
@@ -211,7 +202,7 @@ const ManagerModal =({open, handleClose})=>{
                               <MenuItem value={20}>20</MenuItem>
                             </Select>
                     </FormControl>
-                    <Button variant="contained" onClick={handleSubmit}>Submit</Button>
+                    <Button variant="contained" onClick={formik.handleSubmit}>Submit</Button>
                         </div>
                     </Box>
                 </Modal>
