@@ -158,6 +158,11 @@ const ManagerModal =({ handleClose, open})=>{
     setNoUsers(event.target.value);
   };
 
+  const handleSubmit =()=>{
+    formik.handleSubmit;
+    handleClose()
+  }
+
   
 
   return (
@@ -238,7 +243,7 @@ const ManagerModal =({ handleClose, open})=>{
                             <MenuItem value={20}>20</MenuItem>
                           </Select>
                     </FormControl>
-                    <Button variant="contained" onClick={formik.handleSubmit} >Submit</Button>
+                    <Button variant="contained" onClick={handleSubmit} >Submit</Button>
                       </div>
                   </Box>
               </Modal>
