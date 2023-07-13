@@ -7,6 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { Button } from '@mui/material';
+import { useFormik } from 'formik';
 
 const style = {
     position: 'absolute',
@@ -24,29 +25,113 @@ const style = {
 const ManagerModal =({open, handleClose})=>{
     const [value, setValue] = useState('');
     const [error, setError] = useState(false);
-    const [age, setAge] = React.useState('');
+    const [age, setAge] = useState('');
+    const [ noUsers, setNoUsers]= useState('');
 
-    const handleChange = (event) => {
-        setValue(event.target.value);
-        setError(false); // Reset the error state when the user types
-      };
-    
-      const handleSubmit = (event) => {
-        event.preventDefault();
+    const formik = useFormik({
+      initialValues: {
+        email: '',
+        password: '',
+        name: '',
+        shopName:'',
+        location: '',
+        phone: '',
+        username: '',
+        submit: null,
         
-        if (value.trim() === '') {
-          setError(true); // Set error state if the value is empty
-          return;
-        }
-    
-       
-        setValue('');
-      };
 
+      },
+      // validationSchema: Yup.object({
+        
+      //   password: Yup
+      //     .string()
+      //     .max(255)
+      //     .required('Password is required')
+      // }),
+  
+      onSubmit: async (values, helpers) => {
+        try {
+          const response1 = await fetch('https://www.mss.mopawa.co.ke/api/auth/signup', {
+            method: 'POST',
+            headers: {
+              'Accept':'application/json',
+              'Content-Type': 'application/json',
+       
+            },
+            body: JSON.stringify({
+              username: values.username,
+              password: values.password,
+              email: values.username,
+              password: 12345678,
+              name: values.name,
+              shopName: values.shopName,
+              location: values.location,
+              phone: values.phone,
+              
+            })
       
-      const handleUsers = (event) => {
-        setAge(event.target.value);
-      };
+          })
+          .then((response)=>response.json())
+
+       
+          const AllUsers = [];
+
+          for (let i = 1; i < noUsers; i ++){
+            const AllUser = {
+              username: values.username + i,
+              password: '12345678',
+              roles: ['user']
+            };
+            AllUsers.push(AllUser)
+          }
+
+          const response2 = await fetch('https://www.example.com/api/signup', {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                AllUsers
+              }),
+            }).then((response) => response.json());
+
+            console.log(response1);
+            console.log(response2);
+        
+         
+        
+          
+    
+        } catch (err) {
+          helpers.setStatus({ success: false });
+          helpers.setErrors({ submit: err.message });
+          helpers.setSubmitting(false);
+        }
+      }
+    });
+
+
+    const handleChange = (field) => (event) =>  {
+      setError(false); // Reset the error state when the user types
+      formik.handleChange(field)(event); // Connect the event to Formik's handleChange
+    };
+  
+    const handleSubmit = (event) => {
+      event.preventDefault();
+  
+      if (formik.values.name.trim() === '') {
+        setError(true); // Set error state if the value is empty
+        return;
+      }
+  
+      console.log('Clicked')
+      formik.handleSubmit(event);
+    };
+      
+    const handleUsers = (event) => {
+      setNoUsers(event.target.value);
+    };
 
     return (
         <div>
@@ -59,75 +144,74 @@ const ManagerModal =({open, handleClose})=>{
                     <Box sx={{ ...style, width: 400 }}>
                     <h2 id="parent-modal-title">Add new manager</h2>
                         <div style={{ display:'flex', flexDirection:'column', justifyContent:'center'}}>
-                            <TextField
-                                style={{ marginBottom:20}}
-                                error={error}
-                                helperText={error ? 'Field cannot be empty' : ''}
-                                id="outlined-required"
-                                label='Names'
-                                InputProps={{
-                                    placeholder: 'Names',
-                                  }}
-                                />
+                        <TextField
+                            style={{ marginBottom: 20 }}
+                            error={error}
+                            helperText={error ? 'Field cannot be empty' : ''}
+                            id="outlined-required"
+                            label="Names"
+                            onChange={handleChange('name')}
+                            value={formik.values.name}
+                            onBlur={formik.handleBlur('name')}
+                          />
 
-                                <TextField
-                                    style={{ marginBottom:20}}
-                                    error={error}
-                                    helperText={error ? 'Field cannot be empty' : ''}
-                                    id="outlined-required"
-                                    label='User Name i.e 960000'
-                                    InputProps={{
-                                        placeholder: 'User Name',
-                                      }}
-                                    />
+                          <TextField
+                            style={{ marginBottom: 20 }}
+                            error={error}
+                            helperText={error ? 'Field cannot be empty' : ''}
+                            id="outlined-required"
+                            label="User Name i.e 960000"
+                            onChange={handleChange('username')}
+                            value={formik.values.username}
+                            onBlur={formik.handleBlur('username')}
+                          />
 
-                                <TextField
-                                    style={{ marginBottom:20}}
-                                    error={error}
-                                    helperText={error ? 'Field cannot be empty' : ''}
-                                    id="outlined-required"
-                                    label='Phone Number'
-                                    InputProps={{
-                                        placeholder: 'Phone Number',
-                                      }}
-                                    />
-                                <TextField
-                                    style={{ marginBottom:20}}
-                                    error={error}
-                                    helperText={error ? 'Field cannot be empty' : ''}
-                                    id="outlined-required"
-                                    label='Shop Name'
-                                    InputProps={{
-                                        placeholder: 'Shop Name',
-                                      }}
-                                    />
+                          <TextField
+                            style={{ marginBottom: 20 }}
+                            error={error}
+                            helperText={error ? 'Field cannot be empty' : ''}
+                            id="outlined-required"
+                            label="Phone Number"
+                            onChange={handleChange('phone')}
+                            value={formik.values.phone}
+                            onBlur={formik.handleBlur('phone')}
+                          />
+                          <TextField
+                            style={{ marginBottom: 20 }}
+                            error={error}
+                            helperText={error ? 'Field cannot be empty' : ''}
+                            id="outlined-required"
+                            label="Shop Name"
+                            onChange={handleChange('shopName')}
+                            value={formik.values.shopName}
+                            onBlur={formik.handleBlur('shopName')}
+                          />
 
-                                <TextField
-                                    style={{ marginBottom:20}}
-                                    error={error}
-                                    helperText={error ? 'Field cannot be empty' : ''}
-                                    id="outlined-required"
-                                    label='Location'
-                                    InputProps={{
-                                        placeholder: 'Location',
-                                      }}
-                                    />
-                                <FormControl fullWidth  style={{ marginBottom:20}}>
-                                    <InputLabel id="demo-simple-select-label">Number of users</InputLabel>
-                                    <Select
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    value={age}
-                                    label="Number of users"
-                                    onChange={handleUsers}
-                                    
-                                    >
-                                    <MenuItem value={10}>5</MenuItem>
-                                    <MenuItem value={20}>10</MenuItem>
-                                    <MenuItem value={30}>20</MenuItem>
-                                    </Select>
-                                </FormControl>
-                                <Button variant="contained">Submit</Button>
+                          <TextField
+                            style={{ marginBottom: 20 }}
+                            error={error}
+                            helperText={error ? 'Field cannot be empty' : ''}
+                            id="outlined-required"
+                            label="Location"
+                            onChange={handleChange('location')}
+                            value={formik.values.location}
+                            onBlur={formik.handleBlur('location')}
+                          />
+                     <FormControl fullWidth style={{ marginBottom: 20 }}>
+                            <InputLabel id="demo-simple-select-label">Number of users</InputLabel>
+                            <Select
+                              labelId="demo-simple-select-label"
+                              id="demo-simple-select"
+                              value={noUsers}
+                              label="Number of users"
+                              onChange={handleUsers}
+                            >
+                              <MenuItem value={5}>5</MenuItem>
+                              <MenuItem value={10}>10</MenuItem>
+                              <MenuItem value={20}>20</MenuItem>
+                            </Select>
+                    </FormControl>
+                    <Button variant="contained" onClick={handleSubmit}>Submit</Button>
                         </div>
                     </Box>
                 </Modal>

@@ -44,6 +44,12 @@ export const AccountPopover = (props) => {
           color="text.secondary"
           variant="body2"
         >
+          {storedArray.alias}
+        </Typography>
+        <Typography
+          color="text.secondary"
+          variant="body2"
+        >
           User {storedArray.username}
         </Typography>
       </Box>
