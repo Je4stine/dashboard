@@ -85,7 +85,7 @@ const ManagerModal =({open, handleClose})=>{
             AllUsers.push(AllUser)
           }
 
-          const response2 = await fetch('https://www.example.com/api/signup', {
+          const response2 = await fetch('https://www.mss.mopawa.co.ke/api/auth/signup', {
               method: 'POST',
               headers: {
                 'Accept': 'application/json',
