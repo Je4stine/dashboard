@@ -33,7 +33,7 @@ const style = {
 };
 
 
-const ManagerModal =({ handleClose})=>{
+const ManagerModal =({ handleClose, open})=>{
   const [value, setValue] = useState('');
   const [error, setError] = useState(false);
   const [age, setAge] = useState('');
@@ -41,23 +41,23 @@ const ManagerModal =({ handleClose})=>{
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSend =async()=>{
-    await fetch('https://www.mss.mopawa.co.ke/api/auth/signup', {
-          method: 'POST',
-          headers: {
-            'Accept':'application/json',
-            'Content-Type': 'application/json',
+  // const handleSend =async()=>{
+  //   await fetch('https://www.mss.mopawa.co.ke/api/auth/signup', {
+  //         method: 'POST',
+  //         headers: {
+  //           'Accept':'application/json',
+  //           'Content-Type': 'application/json',
      
-          },
-          body: JSON.stringify({
-            username: email,
-            password: password,
-          })
+  //         },
+  //         body: JSON.stringify({
+  //           username: email,
+  //           password: password,
+  //         })
 
-          .then((response)=>response.json)
-          })
+  //         .then((response)=>response.json)
+  //         })
           
-  }
+  // }
   
   
 
@@ -237,8 +237,8 @@ const ManagerModal =({ handleClose})=>{
                             <MenuItem value={10}>10</MenuItem>
                             <MenuItem value={20}>20</MenuItem>
                           </Select>
-                  </FormControl>
-                  <Button variant="contained" onClick={handleSend}>Submit</Button>
+                    </FormControl>
+                    <Button variant="contained" onClick={formik.handleSubmit} >Submit</Button>
                       </div>
                   </Box>
               </Modal>
@@ -392,7 +392,7 @@ const Page = () => {
           </Stack>
         </Container>
       </Box>
-      <ManagerModal open={open} handleClose={handleClose}/>
+      <ManagerModal open={open} handleClose={handleClose} />
     </>
   );
 };
