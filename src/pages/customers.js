@@ -40,79 +40,55 @@ const ManagerModal =({ handleClose, open})=>{
   const [ noUsers, setNoUsers]= useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [ shopName, setShopName]= useState('');
+  const [location, setLocation] =useState('');
+  const [phone, setPhone] = useState('');
+  const [username, setUsername]= useState('')
 
-  // const handleSend =async()=>{
-  //   await fetch('https://www.mss.mopawa.co.ke/api/auth/signup', {
-  //         method: 'POST',
-  //         headers: {
-  //           'Accept':'application/json',
-  //           'Content-Type': 'application/json',
-     
-  //         },
-  //         body: JSON.stringify({
-  //           username: email,
-  //           password: password,
-  //         })
+  
+  
+  const data ={
+        username,
+          email,
+          password: 12345678,
+          name,
+          shopName,
+          location,
+          phone,
+  }
 
-  //         .then((response)=>response.json)
-  //         })
+
+
+  const handleSubmit =async()=>{
+    console.log(data)
+    try {
+      const response1 = await fetch('https://www.mss.mopawa.co.ke/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Accept':'application/json',
+          'Content-Type': 'application/json',
+   
+        },
+        body: JSON.stringify({
+          username,
+          email,
+          password: 12345678,
+          name,
+          shopName,
+          location,
+          phone,
           
-  // }
-  
-  
-
-  const formik = useFormik({
-    initialValues: {
-      email: '',
-      password: '',
-      name: '',
-      shopName:'',
-      location: '',
-      phone: '',
-      username: '',
-      submit: null,
-      
-
-    },
-    // validationSchema: Yup.object({
-      
-    //   password: Yup
-    //     .string()
-    //     .max(255)
-    //     .required('Password is required')
-    // }),
-
-    onSubmit: async (values, helpers) => {
-      console.log("Going")
-      try {
-        const response1 = await fetch('https://www.mss.mopawa.co.ke/api/auth/signup', {
-          method: 'POST',
-          headers: {
-            'Accept':'application/json',
-            'Content-Type': 'application/json',
-     
-          },
-          body: JSON.stringify({
-            username: values.username,
-            password: values.password,
-            email: values.username,
-            password: 12345678,
-            name: values.name,
-            shopName: values.shopName,
-            location: values.location,
-            phone: values.phone,
-            
-          })
-    
         })
-        .then((response)=>response.json())
+  
+      })
+      .then((response)=>response.json())
 
-     
-        const AllUsers = [];
+      const AllUsers = [];
 
         for (let i = 1; i < noUsers; i ++){
           const AllUser = {
-            username: values.username + i,
+            username: username + i,
             password: '12345678',
             roles: ['user']
           };
@@ -134,34 +110,24 @@ const ManagerModal =({ handleClose, open})=>{
           console.log(response1);
           console.log(response2);
       
-       
       
-        
+  }
+  catch(error){
+    console.log(error)
+  }
+};
   
-      } catch (err) {
-        helpers.setStatus({ success: false });
-        helpers.setErrors({ submit: err.message });
-        helpers.setSubmitting(false);
-      }
-    }
-  });
-
-
-  const handleChange = (field) => (event) =>  {
-    setError(false); // Reset the error state when the user types
-    formik.handleChange(field)(event); // Connect the event to Formik's handleChange
-  };
-
  
     
   const handleUsers = (event) => {
     setNoUsers(event.target.value);
   };
 
-  const handleSubmit =()=>{
-    formik.handleSubmit;
-    handleClose()
+  const handleChange = (event)=>{
+
   }
+
+  
 
   
 
@@ -182,9 +148,8 @@ const ManagerModal =({ handleClose, open})=>{
                           helperText={error ? 'Field cannot be empty' : ''}
                           id="outlined-required"
                           label="Names"
-                          onChange={handleChange('name')}
-                          value={formik.values.name}
-                          onBlur={formik.handleBlur('name')}
+                          value={name}
+                          onChange={(event)=>setName(event.target.value)}
                         />
 
                         <TextField
@@ -193,9 +158,9 @@ const ManagerModal =({ handleClose, open})=>{
                           helperText={error ? 'Field cannot be empty' : ''}
                           id="outlined-required"
                           label="User Name i.e 960000"
-                          onChange={handleChange('username')}
-                          value={formik.values.username}
-                          onBlur={formik.handleBlur('username')}
+                          onChange={(event)=>setUsername(event.target.value)}
+                          value={username}
+                         
                         />
 
                         <TextField
@@ -204,9 +169,9 @@ const ManagerModal =({ handleClose, open})=>{
                           helperText={error ? 'Field cannot be empty' : ''}
                           id="outlined-required"
                           label="Phone Number"
-                          onChange={handleChange('phone')}
-                          value={formik.values.phone}
-                          onBlur={formik.handleBlur('phone')}
+                          onChange={(event)=>setPhone(event.target.value)}
+                          value={phone}
+                        
                         />
                         <TextField
                           style={{ marginBottom: 20 }}
@@ -214,9 +179,9 @@ const ManagerModal =({ handleClose, open})=>{
                           helperText={error ? 'Field cannot be empty' : ''}
                           id="outlined-required"
                           label="Shop Name"
-                          onChange={handleChange('shopName')}
-                          value={formik.values.shopName}
-                          onBlur={formik.handleBlur('shopName')}
+                          onChange={(event)=>setShopName(event.target.value)}
+                          value={shopName}
+                         
                         />
 
                         <TextField
@@ -225,9 +190,9 @@ const ManagerModal =({ handleClose, open})=>{
                           helperText={error ? 'Field cannot be empty' : ''}
                           id="outlined-required"
                           label="Location"
-                          onChange={handleChange('location')}
-                          value={formik.values.location}
-                          onBlur={formik.handleBlur('location')}
+                          onChange={(event)=>setLocation(event.target.value)}
+                          value={location}
+                       
                         />
                    <FormControl fullWidth style={{ marginBottom: 20 }}>
                           <InputLabel id="demo-simple-select-label">Number of users</InputLabel>
