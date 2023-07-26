@@ -113,13 +113,13 @@ export const CustomersTable = (props) => {
                       </Stack>
                     </TableCell>
                     <TableCell>
-                      {customer.email}
+                      {customer.shop}
                     </TableCell>
                     <TableCell>
                       ************
                     </TableCell>
                     <TableCell>
-                     +254 7********
+                      {customer.phone}
                     </TableCell>
                     <TableCell>
                       10
