@@ -47,75 +47,59 @@ const ManagerModal =({ handleClose, open})=>{
   const [username, setUsername]= useState('')
 
   
-  
-  const data ={
-        username,
-          email,
-          password: 12345678,
-          name,
-          shopName,
-          location,
-          phone,
-  }
-
-
-
-  const handleSubmit =async()=>{
-    console.log(data)
-    try {
-      const response1 = await fetch('https://www.mss.mopawa.co.ke/api/auth/signup', {
+  const dummyFetch = async()=>{
+    console.log('Submit has been Clicked')
+    try{
+      const response = await fetch("https://www.mss.mopawa.co.ke/api/auth/signup",{
         method: 'POST',
         headers: {
-          'Accept':'application/json',
-          'Content-Type': 'application/json',
-   
+          'Content-Type':'application/json'
         },
         body: JSON.stringify({
-          username,
-          email,
-          password: 12345678,
-          name,
-          shopName,
-          location,
-          phone,
-          
+          username: username,
+          email: `${username}@mss.co.ke`,
+   			  password: "12345678",
+          name: name,
+          location: location,
+          phone: phone
         })
-  
       })
-      .then((response)=>response.json())
 
-      const AllUsers = [];
+      console.log(response.json());
 
-        for (let i = 1; i < noUsers; i ++){
-          const AllUser = {
+      const userCount = noUsers;
+      const allUser = [];
+
+      for ( let i = 1; i <= userCount; i++){
+          const allUsers = {
             username: username + i,
             password: '12345678',
+            email: `${username + i}@mss.com`,
             roles: ['user']
           };
-          AllUsers.push(AllUser)
-        }
-        console.log(AllUsers)
 
-        const response2 = await fetch('https://www.mss.mopawa.co.ke/api/auth/signup', {
+            const response = await fetch("https://www.mss.mopawa.co.ke/api/auth/signup",{
             method: 'POST',
             headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              AllUsers
-            }),
-          }).then((response) => response.json());
+              'Content-Type':'application/json'
+              },
+            body: JSON.stringify(allUsers)
+            });
 
-          console.log(response1);
-          console.log(response2);
+            const responseData = await response.json(); 
+            console.log(responseData);
+
+              allUser.push(allUsers)
+      };
+
+        console.log(allUser)
+
       
-      
+
+    }catch(error){
+      console.log(error)
+    }
   }
-  catch(error){
-    console.log(error)
-  }
-};
   
  
     
@@ -208,7 +192,7 @@ const ManagerModal =({ handleClose, open})=>{
                             <MenuItem value={20}>20</MenuItem>
                           </Select>
                     </FormControl>
-                    <Button variant="contained" onClick={handleSubmit} >Submit</Button>
+                    <Button variant="contained" onClick={dummyFetch} >Submit</Button>
                       </div>
                   </Box>
               </Modal>

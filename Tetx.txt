@@ -1,0 +1,85 @@
+
+const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+      name: '',
+      shopName:'',
+      location: '',
+      phone: '',
+      username: '',
+      submit: null,
+      
+
+    },
+    // validationSchema: Yup.object({
+      
+    //   password: Yup
+    //     .string()
+    //     .max(255)
+    //     .required('Password is required')
+    // }),
+
+    onSubmit: async (values, helpers) => {
+      console.log("Going")
+      try {
+        const response1 = await fetch('https://www.mss.mopawa.co.ke/api/auth/signup', {
+          method: 'POST',
+          headers: {
+            'Accept':'application/json',
+            'Content-Type': 'application/json',
+     
+          },
+          body: JSON.stringify({
+            username: values.username,
+            password: values.password,
+            email: values.username,
+            password: 12345678,
+            name: values.name,
+            shopName: values.shopName,
+            location: values.location,
+            phone: values.phone,
+            
+          })
+    
+        })
+        .then((response)=>response.json())
+
+     
+        const AllUsers = [];
+
+        for (let i = 1; i < noUsers; i ++){
+          const AllUser = {
+            username: values.username + i,
+            password: '12345678',
+            roles: ['user']
+          };
+          AllUsers.push(AllUser)
+        }
+        console.log(AllUsers)
+
+        const response2 = await fetch('https://www.mss.mopawa.co.ke/api/auth/signup', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              AllUsers
+            }),
+          }).then((response) => response.json());
+
+          console.log(response1);
+          console.log(response2);
+      
+       
+      
+        
+  
+      } catch (err) {
+        helpers.setStatus({ success: false });
+        helpers.setErrors({ submit: err.message });
+        helpers.setSubmitting(false);
+      }
+    }
+  });
